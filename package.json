@@ -1,0 +1,20 @@
+{
+  "name": "fast-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "main": "index.js"
+  },
+  "build" : "pkg --out-path dist -t  node12-win-x64 .",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^2.1.0",
+    "puppeteer-extra": "^3.1.9",
+    "puppeteer-extra-plugin-stealth": "^2.4.9"
+  }
+}
