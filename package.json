@@ -15,6 +15,7 @@
   "dependencies": {
     "puppeteer": "^2.1.0",
     "puppeteer-extra": "^3.1.9",
-    "puppeteer-extra-plugin-stealth": "^2.4.9"
+    "puppeteer-extra-plugin-stealth": "^2.4.9",
+    "yargs": "^15.1.0"
   }
 }
