@@ -4,7 +4,9 @@ const reg = require("./registryManager").getRegistry();
 const args = require("yargs").argv;
 const fs = require("fs");
 const fsp = require("fs").promises;
-const puppeteer = reg.isExe ? require(reg.puppeteerExtraDir) : require("puppeteer-extra");
+const puppeteer = reg.isExe
+  ? require(reg.puppeteerExtraDir)
+  : require("puppeteer-extra");
 const StealthPlugin = reg.isExe
   ? require(reg.puppeteerStealthPluginDir)
   : require("puppeteer-extra-plugin-stealth");
@@ -106,6 +108,10 @@ async function getUrls(pathIn) {
   } else {
     items.push(args._[0]);
   }
+
+  console.log(
+    `Overwrite existing files: ${args.overrideResults != true ? false : true}`
+  );
 
   await processUrls(items, args.outDir, args.overrideResults);
 })();
