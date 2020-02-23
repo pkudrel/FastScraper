@@ -1,5 +1,6 @@
 {
   "headless": false,
   "pathToChromium": "",
-  "documentWriterType": "html"
+  "documentWriterType": "html",
+  "mainTimeOut": 4000
 }
