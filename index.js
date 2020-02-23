@@ -4,6 +4,7 @@ const reg = require("./registryManager").getRegistry();
 const args = require("yargs").argv;
 const fs = require("fs");
 const fsp = require("fs").promises;
+
 const puppeteer = reg.isExe
   ? require(reg.puppeteerExtraDir)
   : require("puppeteer-extra");
@@ -11,6 +12,10 @@ const StealthPlugin = reg.isExe
   ? require(reg.puppeteerStealthPluginDir)
   : require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
+
+const writerObj = require("./documentWriter").getDocumentWrier(
+  reg.documentWriterType
+);
 
 async function processUrls(urlsAll, outDir, overrideResults) {
   const browser = await puppeteer.launch({
@@ -38,7 +43,8 @@ async function processUrls(urlsAll, outDir, overrideResults) {
         .createHash("md5")
         .update(uriIn.href)
         .digest("hex");
-      const fileName = uriIn.host + "_" + hash + ".json";
+
+      const fileName = writerObj.getFileName(uriIn.host + "_" + hash);
       const outFile =
         (!outDir || outDir == undefined) == false && fs.existsSync(outDir)
           ? path.join(outDir, fileName)
@@ -62,8 +68,8 @@ async function processUrls(urlsAll, outDir, overrideResults) {
       doc.DocumentBody.Html = html;
       doc.DocumentInfo.UrlIn = uriIn;
       doc.DocumentInfo.UrlOut = uriOut;
-
-      await fsp.writeFile(outFile, JSON.stringify(doc));
+      await writerObj.writeFile(outFile, doc);
+      // await fsp.writeFile(outFile, JSON.stringify(doc));
       console.log(`File to save: ${outFile}`);
     } catch (error) {
       console.log(`Problem with url: ${urlToProcess}; Error: ${error}`);

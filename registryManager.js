@@ -11,7 +11,7 @@ if (fs.existsSync(configFile)) {
 
 const config = fs.existsSync(configFile)
   ? JSON.parse(fs.readFileSync(configFile, "utf8"))
-  : { headless: true, pathToChromium: null };
+  : { headless: true, pathToChromium: null, documentWriterType: "html" };
 
 const subPathToChromium = isExe
   ? path.join(exeDir, "chromium")
@@ -32,7 +32,8 @@ function getRegistry() {
     puppeteerStealthPluginDir: path.join(
       executeDir,
       "puppeteer-extra-plugin-stealth"
-    )
+    ),
+    documentWriterType: config.documentWriterType
   };
 }
 
