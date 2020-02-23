@@ -57,6 +57,11 @@ async function processUrls(urlsAll, outDir, overrideResults) {
 
       await page.goto(uriIn);
       await page.waitFor(2000);
+      await page.waitForSelector(".cf-browser-verification", {
+        hidden: true,
+        timeout: 30000
+      });
+      await page.waitFor(2000);
       const html = await page.content();
       const currentUrl = page.url();
       const uriOut = new URL(currentUrl);
